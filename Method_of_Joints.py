@@ -33,8 +33,8 @@ def SumOfForcesInLocalX(node, local_x_bar):
     
     local_x_force = 0
     
-    Fx = node.GetNetXForce
-    Fy = node.GetNetYForce
+    Fx = node.GetNetXForce()
+    Fy = node.GetNetYForce()
     
     local_x_force += Fx*geom.CosineVectors(local_x_vec,[1,0])
     local_x_force += Fy*geom.CosineVectors(local_x_vec,[0,1])
@@ -57,8 +57,8 @@ def SumOfForcesInLocalY(node, unknown_bars):
     
     local_x_vec = geom.BarNodeToVector(node, local_x_bar)
     local_y_force = 0
-    Fx = node.GetNetXForce
-    Fy = node.GetNetYForce
+    Fx = node.GetNetXForce()
+    Fy = node.GetNetYForce()
     
     local_y_force += Fx*geom.SineVectors(local_x_vec,[1,0])
     local_y_force += Fy*geom.SineVectors(local_x_vec,[0,1])
