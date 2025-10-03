@@ -80,22 +80,21 @@ def IterateUsingMethodOfJoints(nodes,bars):
     Iterations = 0
     max_iterations = 100
     while any(not bar.is_computed for bar in bars):
-        if Iterations < max_iterations:
+        if Iterations > max_iterations:
             return('This seems like an infinite loop, check your truss geometry')
         progress = False
         for node in nodes:
             unknown_bars = UnknownBars(node)
             if NodeIsViable(node):
                 if len(unknown_bars) == 1:
-                    SumOfForcesInLocalX(node, unknown_bars[0])
+                    solved = SumOfForcesInLocalX(node, unknown_bars[0])
+                    if solved:
+                        progress=True
                 elif len(unknown_bars) == 2:
                     local_x_bar = unknown_bars[0]
-                    SumOfForcesInLocalY(node, unknown_bars)
-                    SumOfForcesInLocalX(node, local_x_bar)
-        if not progress:
-            break
+                    solved_y = SumOfForcesInLocalY(node, unknown_bars)
+                    solved_x = SumOfForcesInLocalX(node, local_x_bar)
+                    if solved_y or solved_x:
+                        Progress = True
+        
         Iterations += 1
-            
-    
-    
-    return bars
